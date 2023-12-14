@@ -1,9 +1,6 @@
-section .data
-	msg db 'Hello, World!', 0xA  ; message with LF
-	len equ $ - msg              ; count message length
-	
-section .text
 	global _start                ; _start: entry point for linker
+	
+	section .text
 	
 _start:
 	; write message to stdout
@@ -17,3 +14,7 @@ _start:
 	mov eax, 1                   ; syscall number (1 = sys_exit)
 	xor ebx, ebx                 ; exit code 0
 	int 0x80                     ; call kernel
+	
+	section .data
+	msg db 'Hello, World!', 0xA  ; message with LF
+	len equ $ - msg              ; count message length

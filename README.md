@@ -9,22 +9,41 @@
 sudo apt install nasm
 ```
 
-## Compile
+## Usage
+
+### Compile
+
+#### 64-bit
 
 ```bash
-# 32-bit
-nasm -f elf mandalart.asm
-ld -m elf_i386 -s -o mandalart mandalart.o
+make
 
-# 64-bit
-nasm -f elf64 mandalart.asm
-ld -m elf_x86_64 -s -o mandalart mandalart.o
+mkdir -p bin/x64
+nasm -f elf64 mandalart_x64.asm -o mandalart_x64.o
+ld -m elf_x86_64 -s -o bin/x64/mandalart mandalart_x64.o
 ```
 
-## Run
+#### 32-bit
 
 ```bash
-./mandalart
+make mandalart_x86
+
+mkdir -p bin/x86
+nasm -f elf mandalart_x86.asm -o mandalart_x86.o
+ld -m elf_i386 -s -o bin/x86/mandalart mandalart_x86.o
+```
+
+### Run
+
+```bash
+./bin/x64/mandalart
+./bin/x86/mandalart
+```
+
+### Clean
+
+```bash
+make clean
 ```
 
 ---
@@ -34,4 +53,3 @@ ld -m elf_x86_64 -s -o mandalart mandalart.o
 - [Netwide Assembler](https://www.nasm.us/)
   - github: [nasm](https://github.com/netwide-assembler/nasm)
   - [docs](https://www.nasm.us/docs.php)
-
