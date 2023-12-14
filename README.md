@@ -1,6 +1,6 @@
 # Mandalart
 
-- [mandalart.asm](mandalart.asm)
+- [mandalart_x64.asm](mandalart_x64.asm), [mandalart_x86.asm](mandalart_x86.asm)
 - [examples](examples): [helloworld.asm](examples/helloworld.asm)
 
 ## Install
