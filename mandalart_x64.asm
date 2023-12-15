@@ -2,18 +2,23 @@
 	
 	section .text                ; code section.
 	
+	extern print                 ; print is defined in another file
+	
 _start:
-	; display '.' on the screen
-	mov rax, 1                   ; system call number (sys_write)
-	mov rdi, 1                   ; file descriptor (stdout)
-	lea rsi, [msg]               ; message to write
-	mov rdx, 2                   ; message length
-	syscall                      ; call kernel
+	; print(msg)
+	mov rdi, msg                 ; first argument
+	call print                   ; call print
 	
 	; exit(0)
 	mov rax, 60                  ; system call number (sys_exit)
 	xor rdi, rdi                 ; exit code 0
 	syscall                      ; call kernel
 	
+add:
+	; int add(int a, int b)
+	mov rax, rdi                 ; a
+	add rax, rsi                 ; b
+	ret                          ; return
+	
 	section .data                ; data section
-	msg db '.', 0xA              ; msg is a byte array. db = define byte. with a new line
+	msg db '.'                   ; msg is a byte array. db = define byte.
