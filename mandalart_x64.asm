@@ -14,11 +14,5 @@ _start:
 	xor rdi, rdi                 ; exit code 0
 	syscall                      ; call kernel
 	
-add:
-	; int add(int a, int b)
-	mov rax, rdi                 ; a
-	add rax, rsi                 ; b
-	ret                          ; return
-	
 	section .data                ; data section
 	msg db '.'                   ; msg is a byte array. db = define byte.
