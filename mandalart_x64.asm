@@ -2,49 +2,43 @@
 	
 	section .text                ; code section.
 	
-	extern print                 ; print is defined in another file
+	extern print, strcpy
 	
 _start:
-	cmp rdi, 2 ; check if argc >= 2
-	jl no_args
-
-	mov rdi, [rsi + 8]           ; first argument address
-	mov rsi, buffer
+	; check_args
+	pop rdi                      ; argc
+	mov rsi, rsp                 ; argv
+	cmp rdi, 2                   ; check if argc >= 2
+	jl goodbye                   ; if not, jump to goodbye
+	
+	call load_args               ; load second argument into buffer
+	
+	; print(buffer)
+	mov rdi, buffer
+	call print
+	
+	jmp goodbye
+	
+load_args:
+	mov rsi, [rsi + 8]           ; argv[1]. load second argument's address
+	mov rdi, buffer              ; load buffer's address
 	call strcpy
-
-	; print(msg)
-	mov rdi, msg ; first argument
-	call print ; call print
-
+	ret
+	
+goodbye:
+	; print(bye)
+	mov rdi, bye                 ; load bye's address
+	call print                   ; call print
 	jmp exit
-
+	
 exit:
 	; exit(0)
 	mov rax, 60                  ; system call number (sys_exit)
 	xor rdi, rdi                 ; exit code 0
 	syscall                      ; call kernel
 	
-no_args:
-	; print(msg)
-	mov rdi, msg ; first argument
-	call print ; call print
-
-	jmp exit
-
-strcpy:
-.loop:
-	mov al, [rsi]                ; load byte from source
-	test al, al                  ; check if byte is zero
-	jz .done                     ; if zero, jump to done
-	mov [rdi], al                ; store byte to destination
-	inc rsi                      ; increment source pointer
-	inc rdi                      ; increment destination pointer
-	jmp .loop                    ; repeat until zero byte found
-.done:
-	ret                          ; return from function
-	
 	section .data                ; data section
-	msg db '.'                   ; msg is a byte array. db = define byte.
-
+	bye db 'Bye.'                ; bye is a byte array. db = define byte.
+	
 	section .bss
-	buffer resb 256
+	buffer resb 255              ; reserve 255 bytes for buffer
