@@ -13,31 +13,19 @@ sudo apt install nasm
 
 ### Compile
 
-#### 64-bit
-
 ```bash
+# 64-bit
 make
 
-mkdir -p bin/x64
-nasm -f elf64 mandalart_x64.asm -o mandalart_x64.o
-ld -m elf_x86_64 -s -o bin/x64/mandalart mandalart_x64.o
-```
-
-#### 32-bit
-
-```bash
+# 32-bit
 make mandalart_x86
-
-mkdir -p bin/x86
-nasm -f elf mandalart_x86.asm -o mandalart_x86.o
-ld -m elf_i386 -s -o bin/x86/mandalart mandalart_x86.o
 ```
 
 ### Run
 
 ```bash
-./bin/x64/mandalart
-./bin/x86/mandalart
+./bin/x64/mandalart [data/2024.txt]
+./bin/x86/mandalart [data/2024.txt]
 ```
 
 ### Clean
