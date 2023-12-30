@@ -1,4 +1,4 @@
-	global strcpy
+	global strcpy, clean
 	
 	section .text
 	
@@ -17,6 +17,13 @@ strcpy:
 	jmp .loop                    ; repeat until zero byte found
 .done:
 	ret                          ; return from function
+	
+clean:
+	mov rdi, rdi                 ; buffer address
+	movzx rcx, byte [bufferSize] ; max number of bytes to clear
+	mov al, 0                    ; clear rax
+	rep stosb                    ; clear buffer
+	ret
 	
 	section .data                ; data section
 	bufferSize db 255            ; bufferSize is a byte. db = define byte.

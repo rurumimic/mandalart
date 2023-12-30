@@ -4,6 +4,7 @@
 	; void print(char * str)
 print:
 	push rdi                     ; save rdi on the stack
+	
 	call length                  ; length(msg)
 	push rax                     ; save length on the stack
 	
@@ -15,14 +16,13 @@ print:
 	syscall                      ; call kernel
 	add rsp, 16                  ; remove length and msg from the stack
 	
-	call newline                 ; display newline on the screen
 	ret                          ; return
 	
 	; display newline on the screen
 newline:
 	mov rax, 1                   ; system call number (sys_write)
 	mov rdi, 1                   ; file descriptor (stdout)
-	mov rsi, lf            ; message to write
+	mov rsi, lf                  ; message to write
 	mov rdx, 1                   ; message length
 	syscall                      ; call kernel
 	ret                          ; return
@@ -39,4 +39,4 @@ length:                       ; int length(char * str)
 	ret                          ; return
 	
 	section .data                ; data section.
-	lf db 0x0A             ; newline character
+	lf db 0x0A                   ; newline character

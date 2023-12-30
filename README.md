@@ -24,8 +24,8 @@ make mandalart_x86
 ### Run
 
 ```bash
-./bin/x64/mandalart [data/2024.txt]
-./bin/x86/mandalart [data/2024.txt]
+./bin/x64/mandalart [data/template.txt]
+./bin/x86/mandalart [data/template.txt]
 ```
 
 ### Clean

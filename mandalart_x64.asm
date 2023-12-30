@@ -2,7 +2,9 @@
 	
 	section .text                ; code section.
 	
-	extern print, strcpy
+	extern print, newline
+	extern strcpy, clean
+	extern open, read, read_loop, close
 	
 _start:
 	; check_args
@@ -13,11 +15,32 @@ _start:
 	
 	call load_args               ; load second argument into buffer
 	
-	; print(buffer)
-	mov rdi, buffer
+	mov rdi, title
 	call print
+	call newline
+	
+	call read_file               ; read file
 	
 	jmp goodbye
+	
+read_file:
+	; open(buffer, O_RDONLY)
+	mov rdi, buffer              ; load buffer's address
+	mov rsi, 0                   ; O_RDONLY
+	call open                    ; call open
+	push rax                     ; save file descriptor
+	
+	; read loop
+	mov rdi, [rsp]               ; load file descriptor
+	mov rsi, buffer              ; load buffer's address
+	call read_loop               ; call read_loop
+	
+	; close(fd)
+	mov rdi, [rsp]               ; load file descriptor
+	call close                   ; call close
+	
+	pop rax                      ; restore file descriptor
+	ret
 	
 load_args:
 	mov rsi, [rsi + 8]           ; argv[1]. load second argument's address
@@ -38,7 +61,8 @@ exit:
 	syscall                      ; call kernel
 	
 	section .data                ; data section
-	bye db 'Bye.'                ; bye is a byte array. db = define byte.
+	title db 0x0A, 'Mandalart', 0x0A, 0
+	bye db 0x0A, 'Good Luck.', 0x0A, 0
 	
 	section .bss
 	buffer resb 255              ; reserve 255 bytes for buffer
