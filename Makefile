@@ -1,4 +1,4 @@
-all: mandalart_x64
+all: mandalart_x64 mandalart_x86
 
 bin_x64:
 	mkdir -p bin/x64

@@ -14,8 +14,12 @@ sudo apt install nasm
 ### Compile
 
 ```bash
-# 64-bit
+# 64-bit + 32-bit
 make
+make all
+
+# 64-bit
+make mandalart_x64
 
 # 32-bit
 make mandalart_x86
